@@ -1,5 +1,6 @@
 import type { Room } from "@/lib/tour/rooms";
 
+// Force recompile to pick up .env changes
 const API = import.meta.env.VITE_API_URL ?? "http://localhost:5007/api";
 
 export type SavedTour = {

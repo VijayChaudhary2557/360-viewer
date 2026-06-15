@@ -275,6 +275,13 @@ export const PanoramaViewer = forwardRef<PanoramaViewerHandle, Props>(function P
         (tex) => {
           tex.colorSpace = THREE.SRGBColorSpace;
           s.textureCache.set(url, tex);
+          if (s.renderer) {
+            try {
+              s.renderer.initTexture(tex);
+            } catch (e) {
+              // ignore
+            }
+          }
           resolve(tex);
         },
         undefined,
@@ -362,6 +369,9 @@ export const PanoramaViewer = forwardRef<PanoramaViewerHandle, Props>(function P
       if (isCancelled()) return;
       await waitForTexture(texture);
       if (isCancelled()) return;
+      if (s.renderer && texture) {
+        try { s.renderer.initTexture(texture); } catch (e) {}
+      }
 
       s.pendingFadeTexture = texture;
       await beginPanoramaTransition(s.transition, {
@@ -411,6 +421,9 @@ export const PanoramaViewer = forwardRef<PanoramaViewerHandle, Props>(function P
         if (isCancelled()) return;
         await waitForTexture(texture);
         if (isCancelled()) return;
+        if (s.renderer && texture) {
+          try { s.renderer.initTexture(texture); } catch (e) {}
+        }
       }
 
       // ── Phase 1: CSS scale zoom-in (no FOV change) ────────────────────────
@@ -636,6 +649,9 @@ export const PanoramaViewer = forwardRef<PanoramaViewerHandle, Props>(function P
             if (isCancelled()) return;
             await waitForTexture(texture);
             if (isCancelled()) return;
+            if (s.renderer && texture) {
+              try { s.renderer.initTexture(texture); } catch (e) {}
+            }
           }
           if (texture) s.pendingFadeTexture = texture;
 
