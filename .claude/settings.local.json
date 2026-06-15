@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Recurse)",
+      "Bash(Select-Object -First 100)",
+      "Bash(Format-Table FullName)",
+      "Bash(npm run *)",
+      "Bash(npx tsc *)",
+      "Bash(node_modules/.bin/tsc --noEmit)",
+      "Bash(grep -Hm1 ^description: 'C:\\\\Users\\\\vijay\\\\OneDrive\\\\Desktop\\\\3dView \\(1\\)\\\\3dView/.claude/skills/*/SKILL.md')",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}

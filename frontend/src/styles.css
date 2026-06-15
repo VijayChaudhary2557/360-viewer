@@ -1,0 +1,390 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --font-sans: "Inter Tight", "Inter", system-ui, sans-serif;
+}
+
+:root {
+  --radius: 1rem;
+  /* #0F1115 */
+  --background: oklch(0.17 0.008 260);
+  --foreground: oklch(0.96 0.005 260);
+  --card: oklch(0.21 0.01 260);
+  --card-foreground: oklch(0.96 0.005 260);
+  --popover: oklch(0.21 0.01 260);
+  --popover-foreground: oklch(0.96 0.005 260);
+  --primary: oklch(0.96 0.005 260);
+  --primary-foreground: oklch(0.17 0.008 260);
+  --secondary: oklch(0.26 0.01 260);
+  --secondary-foreground: oklch(0.96 0.005 260);
+  --muted: oklch(0.26 0.01 260);
+  --muted-foreground: oklch(0.62 0.01 260);
+  --accent: oklch(0.72 0.18 240);
+  --accent-foreground: oklch(0.17 0.008 260);
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.96 0.005 260);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.72 0.18 240);
+}
+
+.dark {
+  --background: oklch(0.17 0.008 260);
+  --foreground: oklch(0.96 0.005 260);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html, body, #root {
+    height: 100%;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+  }
+}
+
+/* Glass surface */
+.glass {
+  background: rgba(20, 22, 28, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px) saturate(160%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 20px 60px -20px rgba(0, 0, 0, 0.6),
+    0 8px 24px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Hotspot — Kuula-style navigation markers */
+.hotspot {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+.hotspot-offscreen {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none !important;
+}
+.hotspot-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.25),
+    0 4px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1), background 240ms;
+  animation: hotspotPulse 2s ease-in-out infinite;
+}
+.hotspot-icon {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.85));
+  transition: transform 80ms linear;
+  pointer-events: none;
+}
+.hotspot:hover .hotspot-ring {
+  transform: scale(1.14);
+  background: rgba(255, 255, 255, 0.22);
+}
+.hotspot-label {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 5px 12px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+  opacity: 0.88;
+  pointer-events: none;
+  transition: opacity 200ms, transform 200ms;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+.hotspot:hover .hotspot-label {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+.hotspot-selected .hotspot-ring {
+  border-color: rgba(251, 191, 36, 0.95);
+  background: rgba(251, 191, 36, 0.18);
+  transform: scale(1.12);
+}
+
+.hotspot-selected .hotspot-icon {
+  filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.9));
+}
+.hotspot-selected .hotspot-icon svg path {
+  fill: rgb(251, 191, 36);
+}
+
+.hotspot-floor .hotspot-ring {
+  transform: scaleY(0.72);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.2),
+    0 6px 16px rgba(0, 0, 0, 0.45);
+}
+
+.hotspot-floor .hotspot-label {
+  opacity: 0.92;
+}
+
+.hotspot-floor-edit .hotspot {
+  cursor: grab;
+}
+
+.hotspot-dragging {
+  cursor: grabbing !important;
+  z-index: 30;
+}
+
+.hotspot-dragging .hotspot-ring {
+  border-color: rgba(251, 191, 36, 0.95);
+  background: rgba(251, 191, 36, 0.2);
+}
+
+.hotspot-edit-mode .hotspot {
+  pointer-events: auto;
+}
+
+.hotspot-remove-mode .hotspot .hotspot-ring {
+  border-color: rgba(248, 113, 113, 0.95);
+  background: rgba(248, 113, 113, 0.12);
+  animation: hotspotRemovePulse 1.4s ease-in-out infinite;
+}
+
+.hotspot-remove-mode .hotspot .hotspot-icon {
+  filter: drop-shadow(0 0 8px rgba(248, 113, 113, 0.85));
+}
+.hotspot-remove-mode .hotspot .hotspot-icon svg path {
+  fill: rgb(248, 113, 113);
+}
+
+@keyframes hotspotRemovePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.45); }
+  50% { box-shadow: 0 0 0 12px rgba(248, 113, 113, 0); }
+}
+
+@keyframes hotspotPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.35); }
+  50% { box-shadow: 0 0 0 14px rgba(255, 255, 255, 0); }
+}
+
+.hotspot-enter {
+  animation: hotspotPop 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.panorama-transitioning .hotspot {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.panorama-transitioning .hotspot-preview {
+  opacity: 0;
+}
+
+.panorama-viewer-shell.panorama-transitioning::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.28) 100%);
+  opacity: 1;
+  transition: opacity 0.6s ease;
+  animation: tourVignettePulse 0.9s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes tourVignettePulse {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  100% { opacity: 0.65; }
+}
+
+.hotspot-preview .hotspot-ring {
+  border-color: rgba(96, 200, 255, 0.95);
+  background: rgba(96, 200, 255, 0.15);
+  animation: hotspotPreviewPulse 1.2s ease-in-out infinite;
+}
+
+.hotspot-preview .hotspot-icon {
+  border-color: rgb(96, 200, 255);
+  filter: drop-shadow(0 0 10px rgba(96, 200, 255, 0.9));
+}
+
+@keyframes hotspotPop {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes hotspotPreviewPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(96, 200, 255, 0.55); transform: scale(1); }
+  50% { box-shadow: 0 0 0 12px rgba(96, 200, 255, 0); transform: scale(1.08); }
+}
+
+/* Dock buttons */
+.dock-btn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.85);
+  border: 0;
+  cursor: pointer;
+  transition: background 180ms, color 180ms, box-shadow 240ms;
+}
+.dock-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  box-shadow: 0 0 24px -4px rgba(255, 255, 255, 0.25);
+}
+.dock-btn-active {
+  background: white;
+  color: black;
+}
+.dock-btn-active:hover {
+  background: white;
+  color: black;
+}
+.dock-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms;
+}
+.dock-btn:hover .dock-tooltip {
+  opacity: 1;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.16); }
+
+/* Hotspot walk-forward zoom (CSS scale, no FOV involvement) */
+.panorama-viewer-shell {
+  transform-origin: center center;
+}
+.panorama-walk-zoom {
+  transform: scale(1.14) !important;
+  transition: transform 520ms cubic-bezier(0.25, 0, 0.6, 1) !important;
+}
+
+/* Kuula-style directional nav button */
+.dock-btn-nav {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  border: 1.5px solid rgba(255,255,255,0.18);
+  color: white;
+  cursor: pointer;
+  transition: background 180ms, transform 120ms, box-shadow 200ms;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+.dock-btn-nav:hover {
+  background: rgba(255,255,255,0.2);
+  box-shadow: 0 0 24px -4px rgba(255,255,255,0.35);
+  transform: scale(1.08);
+}
+.dock-btn-nav:active { transform: scale(0.93); }
+
+.dock-btn-rotate {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.75);
+  transition: background 160ms, color 160ms, transform 100ms;
+}
+.dock-btn-rotate:hover {
+  background: rgba(255,255,255,0.12);
+  color: white;
+  transform: scale(1.07);
+}

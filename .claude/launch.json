@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "frontend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "C:\\Users\\vijay\\OneDrive\\Desktop\\3dView (1)\\3dView\\frontend",
+      "port": 8080
+    }
+  ]
+}
