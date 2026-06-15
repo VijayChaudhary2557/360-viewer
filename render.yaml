@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: 3dview-frontend
+    runtime: node
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: VITE_API_URL
+        value: https://three60-viewer-pj0a.onrender.com/api

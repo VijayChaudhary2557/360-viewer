@@ -12,4 +12,8 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Enable Nitro with Node.js server preset for Render deployment.
+  // Without this, the build skips the server bundler and Render serves nothing.
+  // Output lands at .output/server/index.mjs — started with `node .output/server/index.mjs`.
+  nitro: { preset: "node-server" },
 });
